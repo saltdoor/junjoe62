@@ -1,0 +1,17 @@
+name: Build Junjoe62 VST2
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile junjoe62.dll
+        run: gcc -shared -O3 -msse2 -mfpmath=sse -o junjoe62.dll junjoe62.c -lgdi32 -luser32
+      - uses: actions/upload-artifact@v4
+        with:
+          name: junjoe62-vst
+          path: junjoe62.dll
